@@ -1,0 +1,190 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bar-width: 50px;
+    --bar-height: 6px;
+    --menu-gap: 6px;
+    --foreground: #ffca4b;
+    --background: white;
+    --menu-margin: 8px;
+    --animation-timing: 200ms ease-in-out;
+    --menu-height: calc(var(--bar-height) * 3 + var(--menu-gap) * 2);
+}
+
+body{
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+header{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.element{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-links li{
+    margin-right: 65px;
+}
+
+
+.menu {
+    --x-width: calc(var(--menu-height) * 1.41421356237);
+    display: flex;
+    flex-direction: column;
+    gap: var(--menu-gap);
+    width: max-content;
+    position: fixed;
+    top: var(--menu-margin);
+    left: var(--menu-margin);
+    z-index: 100;
+    cursor: pointer;
+}
+
+.menu:has(input:checked) {
+    --foreground: white;
+    --background: #333;
+}
+
+.menu:has(input:focus-visible)::before,
+.menu:has(input:focus-visible)::after,
+.menu input:focus-visible {
+    border: 1px solid var(--background);
+    box-shadow: 0 0 0 1px var(--foreground);
+}
+
+  .menu::before,
+  .menu::after,
+  .menu input {
+    content: "";
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background-color: var(--foreground);
+    border-radius: 9999px;
+    transform-origin: left center;
+    transition: opacity var(--animation-timing), width var(--animation-timing),
+     rotate var(--animation-timing), translate var(--animation-timing),
+     background-color var(--animation-timing);
+}
+
+.menu input {
+    appearance: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    pointer-events: none;
+}
+
+.menu:has(input:checked)::before {
+    rotate: 45deg;
+    width: var(--x-width);
+    translate: 0 calc(var(--bar-height) / -2);
+}
+
+.menu:has(input:checked)::after {
+    rotate: -45deg;
+    width: var(--x-width);
+    translate: 0 calc(var(--bar-height) / 2);
+}
+
+.menu input:checked {
+    opacity: 0;
+    width: 0;
+}
+
+.navbar {
+    transition: translate var(--animation-timing);
+    translate: -300%;
+    padding: 0.5rem 1rem;
+    padding-top: calc(var(--menu-height) + var(--menu-margin) + 1rem);
+    background-color: var(--foreground);
+    color: var(--background);
+    max-width: 100%;
+    height: 50px;
+}
+
+.menu:has(input:checked) + .navbar {
+    translate: 0;
+}
+
+.nav-bar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+}
+
+.container{
+    margin: 15px;
+}
+
+section{
+    background-color: #88c1d0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    font-weight: bold;
+    height: 200px;
+    width: 300px;
+}
+
+
+@media (width >= 1600px){
+    .container{
+        display:flex;
+        flex-direction: row;
+        gap: 50px;
+    }
+}
+
+
+@media (width >= 768px) and (width <= 1599px){
+    .container{
+        display:grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 50px;
+    }
+}
+
+@media (width <= 767px) {
+    header{
+        display: inline;
+    }
+    .nav-bar{
+        display: none;
+    }
+
+}
+
+@media (width <= 767px){
+    .container{
+        display:grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 50px;
+    }
+}
